@@ -580,7 +580,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         optimizer_D.step()
 
 
-
+        #asdawdasc
 
 
         # if args.apex:
