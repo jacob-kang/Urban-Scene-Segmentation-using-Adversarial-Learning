@@ -1,0 +1,2952 @@
+Torch version: 1.11, 1.11.0+cu102
+Torch version: 1.11, 1.11.0+cu102
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Torch version: 1.11, 1.11.0+cu102
+dataset = cityscapes
+ignore_label = 255
+num_classes = 19
+cv split val 0 ['val/munster', 'val/lindau', 'val/frankfurt']
+mode val found 500 images
+cn num_classes 19
+cv split train 0 ['train/aachen', 'train/bochum', 'train/bremen', 'train/cologne', 'train/darmstadt', 'train/dusseldorf', 'train/erfurt', 'train/hamburg', 'train/hanover', 'train/jena', 'train/krefeld', 'train/monchengladbach', 'train/strasbourg', 'train/stuttgart', 'train/tubingen', 'train/ulm', 'train/weimar', 'train/zurich']
+mode train found 2975 images
+cn num_classes 19
+Loading centroid file /SSD1/jisu/deeplabv3/uniform_centroids/cityscapes_cv0_tile1024.json
+Found 19 centroids
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
+Using Cross Entropy Loss
+Using Cross Entropy Loss
+Trunk: resnet-50
+Model params = 40.4M
+Class Uniform Percentage: 0.5
+Class Uniform items per Epoch: 2975
+cls 0 len 5866
+cls 1 len 5184
+cls 2 len 5678
+cls 3 len 1312
+cls 4 len 1723
+cls 5 len 5656
+cls 6 len 2769
+cls 7 len 4860
+cls 8 len 5388
+cls 9 len 2440
+cls 10 len 4722
+cls 11 len 3719
+cls 12 len 1239
+cls 13 len 5075
+cls 14 len 444
+cls 15 len 348
+cls 16 len 188
+cls 17 len 575
+cls 18 len 2238
