@@ -317,7 +317,15 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.model = nn.Sequential(
-            nn.Linear(int(np.prod((2,800,800))), 512),
+            nn.Conv2d(in_channels=1,out_channels=10,kernel_size=7,stride=2),        #398
+            nn.Conv2d(in_channels=10,out_channels=100,kernel_size=3,stride=2),      #199
+            # nn.Conv2d(in_channels=100,out_channels=200,kernel_size=3,stride=2),     #99
+            # nn.Conv2d(in_channels=200,out_channels=300,kernel_size=3,stride=2),     #49
+            # nn.Conv2d(in_channels=300,out_channels=400,kernel_size=3,stride=2),     #24
+            # nn.Conv2d(in_channels=400,out_channels=500,kernel_size=3,stride=2),     #11
+            nn.AdaptiveAvgPool2d(100),
+            
+            nn.Linear(100, 512),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(512, 256),
             nn.LeakyReLU(0.2, inplace=True),
@@ -326,8 +334,7 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, img):
-        img_flat = img.flatten()
-        validity = self.model(img_flat)
+        validity = self.model(img)
 
         return validity
 #----------------------------
@@ -553,7 +560,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         pred_float = torch.tensor(pred, dtype = torch.float32)      #bias와 weight랑 같이 float32여야함. 이전에는 int
         gts_float = torch.tensor(gts, dtype = torch.float32)
 
-        adv_loss = adversarial_loss(discriminator(pred_float),discriminator(gts_float))
+        adv_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),discriminator(torch.unsqueeze(gts_float,dim=1)))
 
         stage1_loss = seg_loss + adv_loss
         stage1_loss.backward()
@@ -572,15 +579,14 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         discriminator.train()
         discriminator.zero_grad()
 
-        real_loss = adversarial_loss(discriminator(pred_float),1)
-        fake_loss = adversarial_loss(discriminator(pred_float),0)
+        real_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),1)
+        fake_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),0)
         stage2_loss = (real_loss + fake_loss)/2
 
         stage2_loss.backward()
         optimizer_D.step()
 
 
-        #asdawdascasvzxvzxc
 
 
         # if args.apex:
