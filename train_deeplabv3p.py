@@ -597,48 +597,47 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
 
 
 
+        if args.apex:
+            log_main_loss = seg_loss.clone().detach_()
+            torch.distributed.all_reduce(log_main_loss,
+                                         torch.distributed.ReduceOp.SUM)
+            log_main_loss = log_main_loss / args.world_size
+        else:
+            seg_loss = seg_loss.mean()
+            log_main_loss = seg_loss.clone().detach_()
 
-        # if args.apex:
-        #     log_main_loss = seg_loss.clone().detach_()
-        #     torch.distributed.all_reduce(log_main_loss,
-        #                                  torch.distributed.ReduceOp.SUM)
-        #     log_main_loss = log_main_loss / args.world_size
-        # else:
-        #     seg_loss = seg_loss.mean()
-        #     log_main_loss = seg_loss.clone().detach_()
+        train_main_loss.update(log_main_loss.item(), batch_pixel_size)
+        if args.fp16:
+            with amp.scale_loss(seg_loss, optimizer_S) as scaled_loss:
+                scaled_loss.backward()
+        else:
+            seg_loss.backward()
 
-        # train_main_loss.update(log_main_loss.item(), batch_pixel_size)
-        # if args.fp16:
-        #     with amp.scale_loss(seg_loss, optimizer_S) as scaled_loss:
-        #         scaled_loss.backward()
-        # else:
-        #     seg_loss.backward()
+        optimizer_S.step()
 
-        # optimizer_S.step()
+        if i >= warmup_iter:
+            curr_time = time.time()
+            batches = i - warmup_iter + 1
+            batchtime = (curr_time - start_time) / batches
+        else:
+            batchtime = 0
 
-        # if i >= warmup_iter:
-        #     curr_time = time.time()
-        #     batches = i - warmup_iter + 1
-        #     batchtime = (curr_time - start_time) / batches
-        # else:
-        #     batchtime = 0
+        msg = ('[epoch {}], [iter {} / {}], [train main loss {:0.6f}],'
+               ' [lr {:0.6f}] [batchtime {:0.3g}]')
+        msg = msg.format(
+            curr_epoch, i + 1, len(train_loader), train_main_loss.avg,
+            optimizer_S.param_groups[-1]['lr'], batchtime)
+        logx.msg(msg)
 
-        # msg = ('[epoch {}], [iter {} / {}], [train main loss {:0.6f}],'
-        #        ' [lr {:0.6f}] [batchtime {:0.3g}]')
-        # msg = msg.format(
-        #     curr_epoch, i + 1, len(train_loader), train_main_loss.avg,
-        #     optimizer_S.param_groups[-1]['lr'], batchtime)
-        # logx.msg(msg)
+        metrics = {'loss': train_main_loss.avg,
+                   'lr': optimizer_S.param_groups[-1]['lr']}
+        curr_iter = curr_epoch * len(train_loader) + i
+        logx.metric('train', metrics, curr_iter)
 
-        # metrics = {'loss': train_main_loss.avg,
-        #            'lr': optimizer_S.param_groups[-1]['lr']}
-        # curr_iter = curr_epoch * len(train_loader) + i
-        # logx.metric('train', metrics, curr_iter)
-
-        # if i >= 10 and args.test_mode:
-        #     del data, inputs, gts
-        #     return
-        # del data
+        if i >= 10 and args.test_mode:
+            del data, inputs, gts
+            return
+        del data
 
 
 
