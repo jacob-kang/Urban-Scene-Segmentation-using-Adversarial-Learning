@@ -51,7 +51,6 @@ import network
 import torch.nn as nn
 import numpy as np
 
-
 # Import autoresume module
 sys.path.append(os.environ.get('SUBMIT_SCRIPTS', '.'))
 AutoResume = None
@@ -316,15 +315,20 @@ class Discriminator(nn.Module):
     def __init__(self):
         super(Discriminator, self).__init__()
 
-        self.model = nn.Sequential(
+        self.cnn_part = nn.Sequential(
             nn.Conv2d(in_channels=1,out_channels=10,kernel_size=7,stride=2),        #398
+            nn.ReLU(),
             nn.Conv2d(in_channels=10,out_channels=100,kernel_size=3,stride=2),      #199
+            nn.ReLU(),
+            nn.AdaptiveAvgPool2d((1,1))
+            
             # nn.Conv2d(in_channels=100,out_channels=200,kernel_size=3,stride=2),     #99
             # nn.Conv2d(in_channels=200,out_channels=300,kernel_size=3,stride=2),     #49
             # nn.Conv2d(in_channels=300,out_channels=400,kernel_size=3,stride=2),     #24
             # nn.Conv2d(in_channels=400,out_channels=500,kernel_size=3,stride=2),     #11
-            nn.AdaptiveAvgPool2d(100),
-            
+        )
+
+        self.fclayer_part = nn.Sequential(
             nn.Linear(100, 512),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(512, 256),
@@ -334,7 +338,9 @@ class Discriminator(nn.Module):
         )
 
     def forward(self, img):
-        validity = self.model(img)
+        cnns =self.cnn_part(img)
+        flatten_cnns = torch.flatten(cnns,1)       
+        validity = self.fclayer_part(flatten_cnns)
 
         return validity
 #----------------------------
@@ -579,8 +585,11 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         discriminator.train()
         discriminator.zero_grad()
 
-        real_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),1)
-        fake_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),0)
+        real_labels = torch.ones(train_loader.batch_size, 1).cuda()
+        fake_labels = torch.zeros(train_loader.batch_size, 1).cuda()
+
+        real_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),real_labels)
+        fake_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),fake_labels)
         stage2_loss = (real_loss + fake_loss)/2
 
         stage2_loss.backward()
