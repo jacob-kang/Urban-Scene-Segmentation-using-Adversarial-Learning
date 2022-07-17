@@ -613,7 +613,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         else:
             seg_loss.backward()
 
-        optimizer_S.step()
+        optimizer_S.step()      #???
 
         if i >= warmup_iter:
             curr_time = time.time()
