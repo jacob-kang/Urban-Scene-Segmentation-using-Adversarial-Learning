@@ -46,6 +46,14 @@ from config import cfg
 from utils.results_page import ResultsPage
 from runx.logx import logx
 
+#jacob
+def neptune_logger(Neptune_run,val_loss, acc,acc_cls,mean_iu,fwavacc):
+
+    Neptune_run["Val/Seg loss"].log(val_loss)
+    Neptune_run["Val/Acc"].log(acc)
+    Neptune_run["Val/Acc_cls"].log(acc_cls)
+    Neptune_run["Val/Mean_iu"].log(mean_iu)
+    Neptune_run["Val/fwavacc"].log(fwavacc)
 
 def fast_hist(pred, gtruth, num_classes):
     # mask indicates pixels we care about
@@ -98,7 +106,7 @@ def tensor_to_pil(img):
     return img
 
 
-def eval_metrics(iou_acc, args, net, optim, val_loss, epoch, mf_score=None):
+def eval_metrics(iou_acc, args, net, optim, val_loss, epoch, mf_score=None, Neptune_run=None):
     """
     Modified IOU mechanism for on-the-fly IOU calculations ( prevents memory
     overflow for large dataset) Only applies to eval/eval.py
@@ -197,6 +205,10 @@ def eval_metrics(iou_acc, args, net, optim, val_loss, epoch, mf_score=None):
             args.best_record['mean_iu'], args.best_record['fwavacc'])
         logx.msg(best_scores)
     logx.msg('-' * 107)
+
+    #passing neptune logger
+    if Neptune_run != None:
+        neptune_logger(Neptune_run, val_loss.avg,acc,acc_cls,mean_iu,fwavacc)
 
     return was_best
 

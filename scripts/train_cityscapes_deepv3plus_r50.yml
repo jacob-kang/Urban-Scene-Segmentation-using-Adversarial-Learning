@@ -1,7 +1,7 @@
-# Train cityscapes with deeplab v3+ and wide-resnet-38 trunk
+# Train cityscapes with deeplab v3+ and resnet-50
 # Only requires 16GB gpus
 
-CMD: "python -m torch.distributed.launch --nproc_per_node=2 /home/newjacob19/semantic-segmentation/train.py"
+CMD: "python -m torch.distributed.launch --nproc_per_node=2 /home/newjacob19/semantic-segmentation/train_deeplabv3p.py"
 
 HPARAMS: [
   {
@@ -11,7 +11,7 @@ HPARAMS: [
    apex: true,
    fp16: true,
    crop_size: "800,800",
-   bs_trn: 1,
+   bs_trn: 2,
    poly_exp: 2,
    lr: 5e-3,
    max_epoch: 175,

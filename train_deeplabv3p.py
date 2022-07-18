@@ -39,7 +39,7 @@ import torch
 from apex import amp
 from runx.logx import logx
 from config import assert_and_infer_cfg, update_epoch, cfg
-from utils.misc import AverageMeter, prep_experiment, eval_metrics
+from utils.misc import AverageMeter, prep_experiment, eval_metrics, neptune_logger
 from utils.misc import ImageDumper
 from utils.trnval_utils import eval_minibatch, validate_topn
 from loss.utils import get_loss
@@ -106,9 +106,9 @@ parser.add_argument('--rescale', type=float, default=1.0,
 parser.add_argument('--repoly', type=float, default=1.5,
                     help='Warm Restart new poly exp')
 
-parser.add_argument('--apex', action='store_true', default=False,
+parser.add_argument('--apex', action='store_true', default=True,
                     help='Use Nvidia Apex Distributed Data Parallel')
-parser.add_argument('--fp16', action='store_true', default=False,
+parser.add_argument('--fp16', action='store_true', default=True,
                     help='Use Nvidia Apex AMP')
 
 parser.add_argument('--local_rank', default=0, type=int,
@@ -166,7 +166,7 @@ parser.add_argument('--exp', type=str, default='default',
                     help='experiment directory name')
 parser.add_argument('--result_dir', type=str, default='./logs',
                     help='where to write log output')
-parser.add_argument('--syncbn', action='store_true', default=False,
+parser.add_argument('--syncbn', action='store_true', default=True,
                     help='Use Synchronized BN')
 parser.add_argument('--dump_augmentation_images', action='store_true', default=False,
                     help='Dump Augmentated Images for sanity check')
@@ -278,8 +278,8 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 
 #jacob import
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="2"
+# os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
+# os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 from neptune_token import run       #netpune token.
 
@@ -502,8 +502,6 @@ def main():
 
         train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss)
 
-        run.stop()
-
         if args.apex:
             train_loader.sampler.set_epoch(epoch + 1)
 
@@ -514,6 +512,8 @@ def main():
 
         if check_termination(epoch):
             return 0
+
+    run.stop()      #stop neptune
 
 
 def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss):
@@ -721,10 +721,10 @@ def validate(val_loader, net, criterion, optim, epoch,
 
         input_images, labels, img_names, _ = data
 
-        dumper.dump({'gt_images': labels,
-                     'input_images': input_images,
-                     'img_names': img_names,
-                     'assets': assets}, val_idx)
+        # dumper.dump({'gt_images': labels,
+        #              'input_images': input_images,
+        #              'img_names': img_names,
+        #              'assets': assets}, val_idx)
 
         if val_idx > 5 and args.test_mode:
             break
@@ -734,12 +734,11 @@ def validate(val_loader, net, criterion, optim, epoch,
 
     was_best = False
     if calc_metrics:
-        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch)
+        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch,Neptune_run=run)
 
     # Write out a summary html page and tensorboard image table
     if not args.dump_for_auto_labelling and not args.dump_for_submission:
         dumper.write_summaries(was_best)
-
 
 if __name__ == '__main__':
     main()

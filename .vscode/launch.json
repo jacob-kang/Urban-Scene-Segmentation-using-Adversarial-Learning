@@ -7,8 +7,8 @@
         {
             "name": "Python: 현재 파일",
             "type": "python",
-            //"args": ["CUDA_VISIBLE_DEVICES","2"],
-            //"env": {},
+            //"args": ["-m", "torch.distributed.launch", "--nproc_per_node=2"],
+            "env": {"CUDA_VISIBLE_DICES":"1"},
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
