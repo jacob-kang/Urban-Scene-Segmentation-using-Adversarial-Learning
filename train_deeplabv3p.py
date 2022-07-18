@@ -277,9 +277,11 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
                     'acc_cls': 0, 'mean_iu': 0, 'fwavacc': 0}
 
 
-
+#jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
 os.environ["CUDA_VISIBLE_DEVICES"]="2"
+
+from neptune_token import run       #netpune token.
 
 from PIL import Image
 
@@ -500,6 +502,8 @@ def main():
 
         train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss)
 
+        run.stop()
+
         if args.apex:
             train_loader.sampler.set_epoch(epoch + 1)
 
@@ -526,7 +530,8 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     optimizer_D: Optimizer of discriminator
     """
 
-    train_main_loss = AverageMeter()
+    train_stage1_loss = AverageMeter()
+    train_stage2_loss = AverageMeter()
     start_time = None
     warmup_iter = 10
 
@@ -569,7 +574,24 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         adv_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),discriminator(torch.unsqueeze(gts_float,dim=1)))
 
         stage1_loss = seg_loss + adv_loss
-        stage1_loss.backward()
+
+        #---
+        if args.apex:
+            log_stage1_loss = stage1_loss.clone().detach_()
+            torch.distributed.all_reduce(log_stage1_loss,
+                                         torch.distributed.ReduceOp.SUM)
+            log_stage1_loss = log_stage1_loss / args.world_size
+        else:
+            stage1_loss = stage1_loss.mean()
+            log_stage1_loss = stage1_loss.clone().detach_()
+
+        train_stage1_loss.update(log_stage1_loss.item(), batch_pixel_size)        #??? 이게 뭐지?
+        if args.fp16:
+            with amp.scale_loss(stage1_loss, optimizer_S) as scaled_loss:
+                scaled_loss.backward()
+        else:
+            stage1_loss.backward()
+        #---
         optimizer_S.step()
 
 
@@ -592,28 +614,28 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         fake_loss = adversarial_loss(discriminator(torch.unsqueeze(pred_float,dim=1)),fake_labels)
         stage2_loss = (real_loss + fake_loss)/2
 
-        stage2_loss.backward()
+        #---
+        if args.apex:
+            log_stage2_loss = stage2_loss.clone().detach_()
+            torch.distributed.all_reduce(log_stage2_loss,
+                                         torch.distributed.ReduceOp.SUM)
+            log_stage2_loss = log_stage2_loss / args.world_size
+        else:
+            stage2_loss = stage2_loss.mean()
+            log_stage2_loss = stage2_loss.clone().detach_()
+
+        train_stage2_loss.update(log_stage2_loss.item(), batch_pixel_size)        #??? 이게 뭐지?
+        if args.fp16:
+            with amp.scale_loss(stage2_loss, optimizer_D) as scaled_loss:
+                scaled_loss.backward()
+        else:
+            stage2_loss.backward()
+
+        #---
         optimizer_D.step()
 
 
 
-        if args.apex:
-            log_main_loss = seg_loss.clone().detach_()
-            torch.distributed.all_reduce(log_main_loss,
-                                         torch.distributed.ReduceOp.SUM)
-            log_main_loss = log_main_loss / args.world_size
-        else:
-            seg_loss = seg_loss.mean()
-            log_main_loss = seg_loss.clone().detach_()
-
-        train_main_loss.update(log_main_loss.item(), batch_pixel_size)
-        if args.fp16:
-            with amp.scale_loss(seg_loss, optimizer_S) as scaled_loss:
-                scaled_loss.backward()
-        else:
-            seg_loss.backward()
-
-        optimizer_S.step()      #???
 
         if i >= warmup_iter:
             curr_time = time.time()
@@ -622,17 +644,28 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         else:
             batchtime = 0
 
-        msg = ('[epoch {}], [iter {} / {}], [train main loss {:0.6f}],'
-               ' [lr {:0.6f}] [batchtime {:0.3g}]')
+        msg = ('[epoch {}], [iter {} / {}], [train stage1 loss {:0.6f} (Seg loss {}, Adv loss {})], [Stage1 lr {:0.6f}]'
+               '\n[train stage2 loss {:0.6f} (real loss {}, fake loss {})],'
+               ' [Stage2 lr {:0.6f}] [batchtime {:0.3g}]')
         msg = msg.format(
-            curr_epoch, i + 1, len(train_loader), train_main_loss.avg,
-            optimizer_S.param_groups[-1]['lr'], batchtime)
+            curr_epoch, i + 1, len(train_loader), train_stage1_loss.avg,seg_loss,adv_loss,optimizer_S.param_groups[-1]['lr'],
+            train_stage2_loss.avg,real_loss,fake_loss,optimizer_D.param_groups[-1]['lr'], batchtime)
         logx.msg(msg)
 
-        metrics = {'loss': train_main_loss.avg,
+        metrics = {'Seg loss': train_stage1_loss.avg,
                    'lr': optimizer_S.param_groups[-1]['lr']}
         curr_iter = curr_epoch * len(train_loader) + i
         logx.metric('train', metrics, curr_iter)
+
+        #netune
+        run["train/Stage1 loss"].log(train_stage1_loss.avg)
+        run["train/Seg loss"].log(seg_loss)
+        run["train/Adv loss"].log(adv_loss)
+
+        run["train/Stage2 loss"].log(train_stage2_loss.avg)
+        run["train/Real loss"].log(real_loss)
+        run["train/Fake loss"].log(fake_loss)
+
 
         if i >= 10 and args.test_mode:
             del data, inputs, gts
