@@ -550,7 +550,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         real_labels = torch.ones(train_loader.batch_size, 1).cuda()
         fake_labels = torch.zeros(train_loader.batch_size, 1).cuda()
 
-        onehot_gts=torch.nn.functional.one_hot(gts,256)[:,:,:,0:19] #(batch,H,W,256)
+        onehot_gts=torch.nn.functional.one_hot(gts)[:,:,:,0:19] #(batch,H,W,256)
         onehot_gts=torch.reshape(onehot_gts,(train_loader.batch_size,19,800,800))       #torch.int64
         gts_float = torch.tensor(onehot_gts, dtype = torch.float32)     #2,19,800,800
 
@@ -578,10 +578,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
 
         stage1_loss = seg_loss + adv_loss
-
-        #debug
-        if stage1_loss > 40:
-            print('?')
 
         #---
         if args.apex:
@@ -615,9 +611,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         real_loss = adversarial_loss(discriminator(gts_float),real_labels)
         fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)   # == adv_loss
         stage2_loss = (real_loss + fake_loss)/2
-
-        if (stage2_loss > 40) or (fake_loss > 40) or (real_loss > 40):
-            print('?')
 
         #---
         if args.apex:
