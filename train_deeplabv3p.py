@@ -106,9 +106,9 @@ parser.add_argument('--rescale', type=float, default=1.0,
 parser.add_argument('--repoly', type=float, default=1.5,
                     help='Warm Restart new poly exp')
 
-parser.add_argument('--apex', action='store_true', default=True,
+parser.add_argument('--apex', action='store_true', default=False,
                     help='Use Nvidia Apex Distributed Data Parallel')
-parser.add_argument('--fp16', action='store_true', default=True,
+parser.add_argument('--fp16', action='store_true', default=False,
                     help='Use Nvidia Apex AMP')
 
 parser.add_argument('--local_rank', default=0, type=int,
@@ -126,7 +126,7 @@ parser.add_argument('--hardnm', default=0, type=int,
 
 parser.add_argument('--trunk', type=str, default='resnet101',
                     help='trunk model, can be: resnet101 (default), resnet50')
-parser.add_argument('--max_epoch', type=int, default=175)
+parser.add_argument('--max_epoch', type=int, default=180)
 parser.add_argument('--max_cu_epoch', type=int, default=150,
                     help='Class Uniform Max Epochs')
 parser.add_argument('--start_epoch', type=int, default=0)
@@ -166,7 +166,7 @@ parser.add_argument('--exp', type=str, default='default',
                     help='experiment directory name')
 parser.add_argument('--result_dir', type=str, default='./logs',
                     help='where to write log output')
-parser.add_argument('--syncbn', action='store_true', default=True,
+parser.add_argument('--syncbn', action='store_true', default=False,
                     help='Use Synchronized BN')
 parser.add_argument('--dump_augmentation_images', action='store_true', default=False,
                     help='Dump Augmentated Images for sanity check')
@@ -283,10 +283,6 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 from neptune_token import run       #netpune token.
 
-from PIL import Image
-
-
-
 # Enable CUDNN Benchmarking optimization
 torch.backends.cudnn.benchmark = True
 if args.deterministic:
@@ -318,20 +314,21 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.cnn_part = nn.Sequential(
-            nn.Conv2d(in_channels=1,out_channels=10,kernel_size=7,stride=2),        #398
+            nn.Conv2d(in_channels=1,out_channels=10,kernel_size=7,stride=2),
+            nn.BatchNorm2d(10),
             nn.ReLU(),
-            nn.Conv2d(in_channels=10,out_channels=100,kernel_size=3,stride=2),      #199
+            nn.Conv2d(in_channels=10,out_channels=100,kernel_size=3,stride=2),
+            nn.BatchNorm2d(100),
             nn.ReLU(),
+            nn.Conv2d(in_channels=100,out_channels=300,kernel_size=3,stride=2),
+            nn.BatchNorm2d(300),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=300,out_channels=500,kernel_size=3,stride=2),
             nn.AdaptiveAvgPool2d((1,1))
-            
-            # nn.Conv2d(in_channels=100,out_channels=200,kernel_size=3,stride=2),     #99
-            # nn.Conv2d(in_channels=200,out_channels=300,kernel_size=3,stride=2),     #49
-            # nn.Conv2d(in_channels=300,out_channels=400,kernel_size=3,stride=2),     #24
-            # nn.Conv2d(in_channels=400,out_channels=500,kernel_size=3,stride=2),     #11
         )
 
         self.fclayer_part = nn.Sequential(
-            nn.Linear(100, 512),
+            nn.Linear(500, 512),
             nn.LeakyReLU(0.2, inplace=True),
             nn.Linear(512, 256),
             nn.LeakyReLU(0.2, inplace=True),
@@ -555,11 +552,9 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         
         #segmentation unfreeze
         segmentation.train()
-        optimizer_S.zero_grad()
-        
-        #discriminator freeze
-        discriminator.eval()
+        discriminator.train()
 
+        optimizer_S.zero_grad()
         seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segemetnation 마스크임.
         
         #dumping out
@@ -599,14 +594,8 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #   Stage 2
         #   Training Discriminator ONLY
         #------------------
-        
-        #segmentation freeze
-        segmentation.eval()
-
         #discriminatro unfreeze
-        discriminator.train()
-        discriminator.zero_grad()
-
+        optimizer_D.zero_grad()
         real_labels = torch.ones(train_loader.batch_size, 1).cuda()
         fake_labels = torch.zeros(train_loader.batch_size, 1).cuda()
 
@@ -671,9 +660,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             del data, inputs, gts
             return
         del data
-
-
-
 
 
 

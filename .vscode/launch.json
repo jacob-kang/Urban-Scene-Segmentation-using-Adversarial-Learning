@@ -7,10 +7,11 @@
         {
             "name": "Python: 현재 파일",
             "type": "python",
-            //"args": ["-m", "torch.distributed.launch", "--nproc_per_node=2"],
-            "env": {"CUDA_VISIBLE_DICES":"1"},
+            "module": "torch.distributed.launch",
+            "args": ["--nproc_per_node","2","/home/newjacob19/semantic-segmentation/train_deeplabv3p.py"],
+            "env": {"CUDA_VISIBLE_DEVICES":"1,2"},
             "request": "launch",
-            "program": "${file}",
+            //"program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true
         }
