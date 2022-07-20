@@ -1,0 +1,6 @@
+logs/
+neptune_token.py
+.neptune/
+*.log
+*.out
+*.pyc
