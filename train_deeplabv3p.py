@@ -569,12 +569,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #-----------------       
 
         adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
-
         stage1_loss = seg_loss + adv_loss
-
-        #debug
-        if stage1_loss > 40:    #?
-            print('?')
 
         #---
         if args.apex:
@@ -613,9 +608,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
         stage2_loss = (real_loss + fake_loss)/2
 
-        if (stage2_loss > 40) or (fake_loss > 40) or (real_loss > 40):
-            print('?')
-
         #---
         if args.apex:
             log_stage2_loss = stage2_loss.clone().detach_()
@@ -626,7 +618,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             stage2_loss = stage2_loss.mean()
             log_stage2_loss = stage2_loss.clone().detach_()
 
-        train_stage2_loss.update(log_stage2_loss.item(), batch_pixel_size)        #??? 이게 뭐지?
+        train_stage2_loss.update(log_stage2_loss.item(), batch_pixel_size)
         if args.fp16:
             with amp.scale_loss(stage2_loss, optimizer_D) as scaled_loss:
                 scaled_loss.backward()
