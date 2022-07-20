@@ -573,7 +573,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         stage1_loss = seg_loss + adv_loss
 
         #debug
-        if stage1_loss > 40:
+        if stage1_loss > 40:    #?
             print('?')
 
         #---
