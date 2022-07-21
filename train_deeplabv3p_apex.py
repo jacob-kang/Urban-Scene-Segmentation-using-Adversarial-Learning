@@ -108,9 +108,9 @@ parser.add_argument('--rescale', type=float, default=1.0,
 parser.add_argument('--repoly', type=float, default=1.5,
                     help='Warm Restart new poly exp')
 
-parser.add_argument('--apex', action='store_true', default=False,
+parser.add_argument('--apex', action='store_true', default=True,
                     help='Use Nvidia Apex Distributed Data Parallel')
-parser.add_argument('--fp16', action='store_true', default=False,
+parser.add_argument('--fp16', action='store_true', default=True,
                     help='Use Nvidia Apex AMP')
 
 parser.add_argument('--local_rank', default=0, type=int,
@@ -168,7 +168,7 @@ parser.add_argument('--exp', type=str, default='default',
                     help='experiment directory name')
 parser.add_argument('--result_dir', type=str, default='./logs',
                     help='where to write log output')
-parser.add_argument('--syncbn', action='store_true', default=False,
+parser.add_argument('--syncbn', action='store_true', default=True,
                     help='Use Synchronized BN')
 parser.add_argument('--dump_augmentation_images', action='store_true', default=False,
                     help='Dump Augmentated Images for sanity check')
@@ -281,7 +281,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="5"
+os.environ["CUDA_VISIBLE_DEVICES"]="2,5"
 
 from neptune_token import run       #netpune token.
 
@@ -423,10 +423,17 @@ def main():
     net = network.get_net(args, criterion)      #model retrun (deeplabv3 resnet-50)
     optim, scheduler = get_optimizer(args, net) #optim : SGD
 
+    discriminator = Discriminator().cuda()     #GAN
+    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))       #GAN
+
+
     if args.fp16:
         net, optim = amp.initialize(net, optim, opt_level=args.amp_opt_level)
+        discriminator, optimizer_D = amp.initialize(discriminator, optimizer_D, opt_level=args.amp_opt_level)
+
 
     net = network.wrap_network_in_dataparallel(net, args.apex)
+    discriminator = network.wrap_network_in_dataparallel(discriminator,args.apex)       #GAN
 
     if args.restore_optimizer:
         restore_opt(optim, checkpoint)
@@ -467,12 +474,10 @@ def main():
 
     #--------------
     #GAN
-    adversarial_loss = torch.nn.BCELoss()   #GAN
-    discriminator = Discriminator()     #GAN
-    if torch.cuda.is_available():       #GAN
-        discriminator.cuda()
-        adversarial_loss.cuda()
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    #adversarial_loss = torch.nn.BCELoss()   #GAN
+    adversarial_loss = torch.nn.BCEWithLogitsLoss().cuda()
+
+    
 
 
 

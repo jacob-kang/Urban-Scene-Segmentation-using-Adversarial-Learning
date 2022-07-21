@@ -281,7 +281,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="5"
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 
 from neptune_token import run       #netpune token.
 
@@ -316,22 +316,19 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.cnn_part = nn.Sequential(
-            nn.Conv2d(in_channels=19,out_channels=30,kernel_size=7,stride=2),
-            nn.BatchNorm2d(30),
+            nn.Conv2d(in_channels=19,out_channels=38,kernel_size=5,stride=5 ,dilation=2),
+            nn.BatchNorm2d(38),
             nn.ReLU(),
-            nn.Conv2d(in_channels=30,out_channels=60,kernel_size=3,stride=2),
-            nn.BatchNorm2d(60),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2),
+            nn.Conv2d(in_channels=38,out_channels=60,kernel_size=5,stride=5,dilation=2),
             nn.AdaptiveAvgPool2d((1,1))
         )
 
         self.fclayer_part = nn.Sequential(
-            nn.Linear(120, 300),
+            nn.Linear(60, 90),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(300, 150),
+            nn.Linear(90, 30),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(150, 1),
+            nn.Linear(30, 1),
             nn.Sigmoid(),
         )
 
@@ -341,7 +338,7 @@ class Discriminator(nn.Module):
         validity = self.fclayer_part(flatten_cnns)
 
         return validity
-#----------------------------
+#----------------------------   
 
 
 
@@ -472,7 +469,7 @@ def main():
     if torch.cuda.is_available():       #GAN
         discriminator.cuda()
         adversarial_loss.cuda()
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.0002)
 
 
 
