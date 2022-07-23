@@ -146,7 +146,7 @@ parser.add_argument('--bs_trn', type=int, default=2,
                     help='Batch size for training per gpu')
 parser.add_argument('--bs_val', type=int, default=1,
                     help='Batch size for Validation per gpu')
-parser.add_argument('--crop_size', type=str, default="800,800",
+parser.add_argument('--crop_size', type=str, default="400,400",
                     help=('training crop size: either scalar or h,w'))
 parser.add_argument('--scale_min', type=float, default=0.5,
                     help='dynamically scale training images down to this size')
@@ -277,7 +277,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 from neptune_token import run       #netpune token.
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="3"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 # Enable CUDNN Benchmarking optimization
 torch.backends.cudnn.benchmark = True

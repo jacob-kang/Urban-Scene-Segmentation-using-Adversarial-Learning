@@ -150,7 +150,7 @@ parser.add_argument('--bs_trn', type=int, default=2,
                     help='Batch size for training per gpu')
 parser.add_argument('--bs_val', type=int, default=1,
                     help='Batch size for Validation per gpu')
-parser.add_argument('--crop_size', type=str, default="800,800",
+parser.add_argument('--crop_size', type=str, default="400,400",
                     help=('training crop size: either scalar or h,w'))
 parser.add_argument('--scale_min', type=float, default=0.5,
                     help='dynamically scale training images down to this size')
@@ -316,29 +316,47 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.cnn_part = nn.Sequential(
-            nn.Conv2d(in_channels=19,out_channels=38,kernel_size=5,stride=5 ,dilation=2),
-            nn.BatchNorm2d(38),
+            nn.Conv2d(in_channels=19,out_channels=30,kernel_size=7,stride=3),   #(h-4)/3
+            nn.BatchNorm2d(30),
             nn.ReLU(),
-            nn.Conv2d(in_channels=38,out_channels=60,kernel_size=5,stride=5,dilation=2),
-            nn.AdaptiveAvgPool2d((1,1))
+            nn.Conv2d(in_channels=30,out_channels=60,kernel_size=3,stride=2),   #(h-7)/6
+            nn.BatchNorm2d(60),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2),  #(h-10)/12
+            nn.BatchNorm2d(120),
+            nn.ReLU(),
+            nn.Conv2d(in_channels=120,out_channels=240,kernel_size=3,stride=2),  #(h-10)/12
         )
 
         self.fclayer_part = nn.Sequential(
-            nn.Linear(60, 90),
+            nn.Linear(240, 120),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(90, 30),
+            nn.Linear(120, 40),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(30, 1),
-            nn.Sigmoid(),
+            nn.Linear(40, 1),
         )
 
-    def forward(self, img):
-        cnns =self.cnn_part(img)
-        flatten_cnns = torch.flatten(cnns,1)       
-        validity = self.fclayer_part(flatten_cnns)
+        self.glb_avgpool = nn.AdaptiveAvgPool2d((1,1))
 
-        return validity
-#----------------------------   
+        self.sigmoid_part = nn.Sigmoid()
+
+        
+
+    def forward(self, img,mathcing = False):
+        cnns =self.cnn_part(img)        #(batch,120,?,?)        #400기준 2,120,32,32
+        pooled_cnns = self.glb_avgpool(cnns)    #400기준 2,120,1,1
+
+        validity = torch.flatten(pooled_cnns,1)
+        validity = self.fclayer_part(validity)
+        validity = self.sigmoid_part(validity)
+
+
+        #return validity
+        if mathcing == True:
+            return cnns,validity
+        else:
+            return validity
+#----------------------------
 
 
 
@@ -465,11 +483,13 @@ def main():
     #--------------
     #GAN
     adversarial_loss = torch.nn.BCELoss()   #GAN
+    discriminator_loss = torch.nn.MSELoss()    #GAN
     discriminator = Discriminator()     #GAN
     if torch.cuda.is_available():       #GAN
-        discriminator.cuda()
         adversarial_loss.cuda()
-    optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.0002)
+        discriminator_loss.cuda()
+        discriminator.cuda()
+    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
 
 
 
@@ -493,7 +513,7 @@ def main():
         else:
             pass
 
-        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss)
+        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss,discriminator_loss)
 
         if args.apex:
             train_loader.sampler.set_epoch(epoch + 1)
@@ -509,7 +529,7 @@ def main():
     run.stop()      #stop neptune
 
 
-def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss):
+def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss,discriminator_loss):
     """
     Runs the training loop per epoch
     train_loader: Data loader for train
@@ -521,6 +541,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     #Jacob
     discriminator: Discriminator for GAN
     optimizer_D: Optimizer of discriminator
+    discriminator_loss : CrossEntropy for feature matching (improved gan)
     """
 
     train_stage1_loss = AverageMeter()
@@ -533,8 +554,8 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             start_time = time.time()
 
         #Loading images
-        # inputs = (bs,3,713,713)
-        # gts    = (bs,713,713)
+        # inputs = (bs,3,args.crop_size,args.crop_size)
+        # gts    = (bs,args.crop_size,args.crop_size)
         images, gts, _img_name, scale_float = data
         batch_pixel_size = images.size(0) * images.size(2) * images.size(3)
         images, gts, scale_float = images.cuda(), gts.cuda(), scale_float.cuda()
@@ -563,7 +584,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         # The Cityscapes dataset has origianlly 34 classes. But when you use this for training, You should convert 34 classes to 19 classes.
         # And When you train your model, There must be TrainID 255. That is, 'unlabeled, poleground,caravan, trailer, out or roi, etc..'.
         # ignore those 255 IDs.
-        #-----------------       
+        #-----------------
 
         adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
         stage1_loss = seg_loss + adv_loss
@@ -591,7 +612,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #   Stage 2
         #   Training Discriminator ONLY
         #------------------
-        #discriminatro unfreeze
+        #discriminator unfreeze
 
         optimizer_D.zero_grad()   
 
@@ -600,11 +621,18 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         gts_float = onehot_gts.detach().clone().type(torch.float32)     #(batch,19,H,W)    torch.float32
 
         seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
-        smax_out = torch.nn.functional.softmax(out, dim=1)  #(2,19,800,800)
+        smax_out = torch.nn.functional.softmax(out, dim=1)  #(2,19,H,W)
 
-        real_loss = adversarial_loss(discriminator(gts_float),real_labels)
-        fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
-        stage2_loss = (real_loss + fake_loss)/2
+        gts_feature,_ = discriminator(gts_float,mathcing= True)
+        fake_feature,_ = discriminator(smax_out,mathcing= True)
+
+        stage2_loss = discriminator_loss(fake_feature,gts_feature)
+
+        # real_loss = adversarial_loss(discriminator(gts_float),real_labels)
+        # fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
+
+        real_loss = 0
+        fake_loss = 0
 
         #---
         if args.apex:

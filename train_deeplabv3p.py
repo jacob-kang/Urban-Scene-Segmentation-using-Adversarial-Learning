@@ -322,8 +322,8 @@ class Discriminator(nn.Module):
             nn.Conv2d(in_channels=30,out_channels=60,kernel_size=3,stride=2),
             nn.BatchNorm2d(60),
             nn.ReLU(),
-            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2),
-            nn.AdaptiveAvgPool2d((1,1))
+            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2)
+            #nn.AdaptiveAvgPool2d((1,1))
         )
 
         self.fclayer_part = nn.Sequential(
