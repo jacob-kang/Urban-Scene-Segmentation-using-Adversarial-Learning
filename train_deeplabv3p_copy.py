@@ -281,7 +281,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="1"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
 
 from neptune_token import run       #netpune token.
 
@@ -549,6 +549,12 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     start_time = None
     warmup_iter = 10
 
+
+    test_smax = torch.rand((2,19,400,400)).cuda()
+    test_input = torch.rand((2,3,400,400)).cuda()
+
+
+
     for i, data in enumerate(train_loader):
         if i <= warmup_iter:
             start_time = time.time()
@@ -578,6 +584,23 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
         #   'out' the network prediction, shape (batch,19,H,W)
         smax_out = torch.nn.functional.softmax(out, dim=1)  #(batch,19,H,W)
+
+        if i%10 == 9:
+            print(i)
+            loss=discriminator_loss(test_smax,smax_out)
+            print(loss)
+            run["train/seg equal loss"].log(loss)
+
+            loss2=discriminator_loss(images,test_input)
+            print(loss2)
+            run["train/input equal loss"].log(loss2)
+
+            test_smax=smax_out
+
+            test_input=images
+
+            
+
 
         #-----------------
         # https://github.com/mcordts/cityscapesScripts/blob/master/cityscapesscripts/helpers/labels.py
@@ -626,10 +649,19 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         gts_feature,_ = discriminator(gts_float,mathcing= True)
         fake_feature,_ = discriminator(smax_out,mathcing= True)
 
+        before_loss = discriminator_loss(smax_out,gts_float)
+
+        run["train/before disc loss"].log(before_loss)
+
+        # gts_feature=torch.mean(gts_feature,1)
+        # fake_feature=torch.mean(fake_feature,1)
+
         stage2_loss = discriminator_loss(fake_feature,gts_feature)
 
         # real_loss = adversarial_loss(discriminator(gts_float),real_labels)
         # fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
+
+        # stage2_loss = stage2_loss + (real_loss + fake_loss)/2
 
         real_loss = 0
         fake_loss = 0
