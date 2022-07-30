@@ -280,8 +280,8 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 
 #jacob import
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="2,5"
+# os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
+# os.environ["CUDA_VISIBLE_DEVICES"]="2,5"
 
 from neptune_token import run       #netpune token.
 
@@ -424,7 +424,8 @@ def main():
     optim, scheduler = get_optimizer(args, net) #optim : SGD
 
     discriminator = Discriminator().cuda()     #GAN
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))       #GAN
+    #optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))       #GAN
+    optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))       #GAN
 
 
     if args.fp16:

@@ -281,7 +281,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="2"
+os.environ["CUDA_VISIBLE_DEVICES"]="4"
 
 from neptune_token import run       #netpune token.
 
@@ -489,7 +489,7 @@ def main():
         adversarial_loss.cuda()
         discriminator_loss.cuda()
         discriminator.cuda()
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.00002, betas=(0.5, 0.999))
 
 
 
@@ -541,7 +541,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     #Jacob
     discriminator: Discriminator for GAN
     optimizer_D: Optimizer of discriminator
-    discriminator_loss : CrossEntropy for feature matching (improved gan)
+    discriminator_loss : MSEloss for feature matching (improved gan)
     """
 
     train_stage1_loss = AverageMeter()
@@ -551,9 +551,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
 
 
     test_smax = torch.rand((2,19,400,400)).cuda()
-    test_input = torch.rand((2,3,400,400)).cuda()
-
-
 
     for i, data in enumerate(train_loader):
         if i <= warmup_iter:
@@ -585,21 +582,13 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #   'out' the network prediction, shape (batch,19,H,W)
         smax_out = torch.nn.functional.softmax(out, dim=1)  #(batch,19,H,W)
 
-        if i%10 == 9:
+        if i%20 == 19:
             print(i)
             loss=discriminator_loss(test_smax,smax_out)
             print(loss)
             run["train/seg equal loss"].log(loss)
 
-            loss2=discriminator_loss(images,test_input)
-            print(loss2)
-            run["train/input equal loss"].log(loss2)
-
             test_smax=smax_out
-
-            test_input=images
-
-            
 
 
         #-----------------
@@ -610,7 +599,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #-----------------
 
         adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
-        stage1_loss = seg_loss + adv_loss
+        stage1_loss = seg_loss - adv_loss
 
         #---
         if args.apex:
@@ -622,7 +611,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             stage1_loss = stage1_loss.mean()
             log_stage1_loss = stage1_loss.clone().detach_()
 
-        train_stage1_loss.update(log_stage1_loss.item(), batch_pixel_size)        #??? 이게 뭐지?
+        train_stage1_loss.update(log_stage1_loss.item(), batch_pixel_size)
         if args.fp16:
             with amp.scale_loss(stage1_loss, optimizer_S) as scaled_loss:
                 scaled_loss.backward()
@@ -643,28 +632,19 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         onehot_gts=torch.permute(onehot_gts,(0,3,1,2))[:,0:19]          #(batch,256,H,W)   torch.int64  Note. permute and transpose are Not same. It can look similar but not same. 0~18 and 255 dimension contains 1.
         gts_float = onehot_gts.detach().clone().type(torch.float32)     #(batch,19,H,W)    torch.float32
 
-        seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
-        smax_out = torch.nn.functional.softmax(out, dim=1)  #(2,19,H,W)
+        # gts_feature,_ = discriminator(gts_float,mathcing= True)
+        # fake_feature,_ = discriminator(smax_out.detach(),mathcing= True)
+        # stage2_loss = discriminator_loss(fake_feature,gts_feature)
 
-        gts_feature,_ = discriminator(gts_float,mathcing= True)
-        fake_feature,_ = discriminator(smax_out,mathcing= True)
+        #gts_val = discriminator(gts_float)
+        #fake_val = discriminator(smax_out)
 
-        before_loss = discriminator_loss(smax_out,gts_float)
+        #stage2_loss = discriminator_loss(fake_val,gts_val)
 
-        run["train/before disc loss"].log(before_loss)
+        real_loss = adversarial_loss(discriminator(gts_float),real_labels)
+        fake_loss = adversarial_loss(discriminator(smax_out.detach()),fake_labels)
 
-        # gts_feature=torch.mean(gts_feature,1)
-        # fake_feature=torch.mean(fake_feature,1)
-
-        stage2_loss = discriminator_loss(fake_feature,gts_feature)
-
-        # real_loss = adversarial_loss(discriminator(gts_float),real_labels)
-        # fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
-
-        # stage2_loss = stage2_loss + (real_loss + fake_loss)/2
-
-        real_loss = 0
-        fake_loss = 0
+        stage2_loss = (real_loss + fake_loss)/2
 
         #---
         if args.apex:
@@ -675,7 +655,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         else:
             stage2_loss = stage2_loss.mean()
             log_stage2_loss = stage2_loss.clone().detach_()
-
+ 
         train_stage2_loss.update(log_stage2_loss.item(), batch_pixel_size)
         if args.fp16:
             with amp.scale_loss(stage2_loss, optimizer_D) as scaled_loss:
@@ -722,6 +702,9 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             return
         del data
         torch.cuda.empty_cache()
+
+        if i == 80:
+            break
 
 
 
