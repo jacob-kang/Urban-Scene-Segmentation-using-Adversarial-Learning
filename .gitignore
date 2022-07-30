@@ -4,3 +4,4 @@ neptune_token.py
 *.log
 *.out
 *.pyc
+*.code-workspace
