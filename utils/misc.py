@@ -106,7 +106,7 @@ def tensor_to_pil(img):
     return img
 
 
-def eval_metrics(iou_acc, args, net, optim, val_loss, epoch, mf_score=None, Neptune_run=None):
+def eval_metrics(iou_acc, args, net, optim, val_loss, epoch,discriminator=None,optimizer_D=None, mf_score=None, Neptune_run=None):
     """
     Modified IOU mechanism for on-the-fly IOU calculations ( prevents memory
     overflow for large dataset) Only applies to eval/eval.py
@@ -152,15 +152,29 @@ def eval_metrics(iou_acc, args, net, optim, val_loss, epoch, mf_score=None, Nept
     logx.metric('val', metrics, epoch)
     logx.msg('Mean: {:2.2f}'.format(mean_iu * 100))
 
-    save_dict = {
-        'epoch': epoch,
-        'arch': args.arch,
-        'num_classes': cfg.DATASET_INST.num_classes,
-        'state_dict': net.state_dict(),
-        'optimizer': optim.state_dict(),
-        'mean_iu': mean_iu,
-        'command': ' '.join(sys.argv[1:])
-    }
+    if discriminator != None:       #GAN
+        save_dict = {
+            'epoch': epoch,
+            'arch': args.arch,
+            'num_classes': cfg.DATASET_INST.num_classes,
+            'state_dict': net.state_dict(),
+            'optimizer': optim.state_dict(),
+            'discriminator' : discriminator.state_dict(),
+            'optimizer_D' : optimizer_D.state_dict(),
+            'mean_iu': mean_iu,
+            'command': ' '.join(sys.argv[1:])
+        }
+
+    else:
+        save_dict = {
+            'epoch': epoch,
+            'arch': args.arch,
+            'num_classes': cfg.DATASET_INST.num_classes,
+            'state_dict': net.state_dict(),
+            'optimizer': optim.state_dict(),
+            'mean_iu': mean_iu,
+            'command': ' '.join(sys.argv[1:])
+        }
     logx.save_model(save_dict, metric=mean_iu, epoch=epoch)
     torch.cuda.synchronize()
 

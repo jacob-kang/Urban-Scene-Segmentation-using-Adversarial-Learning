@@ -60,7 +60,7 @@ except ImportError:
 
 # Argument Parser
 parser = argparse.ArgumentParser(description='Semantic Segmentation')
-parser.add_argument('--lr', type=float, default=5e-3)
+parser.add_argument('--lr', type=float, default=0.002)
 parser.add_argument('--arch', type=str, default='deepv3.DeepV3PlusR50',
                     help='Network architecture. We have DeepSRNX50V3PlusD (backbone: ResNeXt50) \
                     and deepWV3Plus (backbone: WideResNet38).')
@@ -104,9 +104,9 @@ parser.add_argument('--rescale', type=float, default=1.0,
 parser.add_argument('--repoly', type=float, default=1.5,
                     help='Warm Restart new poly exp')
 
-parser.add_argument('--apex', action='store_true', default=False,
+parser.add_argument('--apex', action='store_true', default=True,
                     help='Use Nvidia Apex Distributed Data Parallel')
-parser.add_argument('--fp16', action='store_true', default=False,
+parser.add_argument('--fp16', action='store_true', default=True,
                     help='Use Nvidia Apex AMP')
 
 parser.add_argument('--local_rank', default=0, type=int,
@@ -138,7 +138,7 @@ parser.add_argument('--brt_aug', action='store_true', default=False,
                     help='Use brightness augmentation')
 parser.add_argument('--lr_schedule', type=str, default='poly',
                     help='name of lr schedule: poly')
-parser.add_argument('--poly_exp', type=float, default=2.0,
+parser.add_argument('--poly_exp', type=float, default=1.0,
                     help='polynomial LR exponent')
 parser.add_argument('--poly_step', type=int, default=110,
                     help='polynomial epoch step')
@@ -146,7 +146,7 @@ parser.add_argument('--bs_trn', type=int, default=2,
                     help='Batch size for training per gpu')
 parser.add_argument('--bs_val', type=int, default=1,
                     help='Batch size for Validation per gpu')
-parser.add_argument('--crop_size', type=str, default="400,400",
+parser.add_argument('--crop_size', type=str, default='896',
                     help=('training crop size: either scalar or h,w'))
 parser.add_argument('--scale_min', type=float, default=0.5,
                     help='dynamically scale training images down to this size')
@@ -155,7 +155,7 @@ parser.add_argument('--scale_max', type=float, default=2.0,
 parser.add_argument('--weight_decay', type=float, default=1e-4)
 parser.add_argument('--momentum', type=float, default=0.9)
 parser.add_argument('--snapshot', type=str, default=None)
-parser.add_argument('--resume', type=str, default=None,
+parser.add_argument('--resume', type=str, default='/home/newjacob19/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50/Plain_deepv3.DeepV3PlusR50_big-carp_2022.08.02_20.03/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_big-carp_2022.08.02_20.03/best_checkpoint_ep97.pth',
                     help=('continue training from a checkpoint. weights, '
                           'optimizer, schedule are restored'))
 parser.add_argument('--restore_optimizer', action='store_true', default=False)
@@ -164,7 +164,7 @@ parser.add_argument('--exp', type=str, default='default',
                     help='experiment directory name')
 parser.add_argument('--result_dir', type=str, default='./logs',
                     help='where to write log output')
-parser.add_argument('--syncbn', action='store_true', default=False,
+parser.add_argument('--syncbn', action='store_true', default=True,
                     help='Use Synchronized BN')
 parser.add_argument('--dump_augmentation_images', action='store_true', default=False,
                     help='Dump Augmentated Images for sanity check')
@@ -277,7 +277,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 from neptune_token import run       #netpune token.
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="2"
+os.environ["CUDA_VISIBLE_DEVICES"]="1,4"
 
 # Enable CUDNN Benchmarking optimization
 torch.backends.cudnn.benchmark = True

@@ -9,7 +9,7 @@
             "type": "python",
             // "module": "torch.distributed.launch",
             // "args": ["--nproc_per_node","2","/home/newjacob19/semantic-segmentation/train_deeplabv3p_apex.py"],
-            // "env": {"CUDA_VISIBLE_DEVICES":"1,2"},
+            // "env": {"CUDA_VISIBLE_DEVICES":"2,3"},
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",

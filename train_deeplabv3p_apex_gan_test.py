@@ -43,7 +43,7 @@ from utils.misc import AverageMeter, prep_experiment, eval_metrics, neptune_logg
 from utils.misc import ImageDumper
 from utils.trnval_utils import eval_minibatch, validate_topn
 from loss.utils import get_loss
-from loss.optimizer import get_optimizer, restore_opt, restore_net
+from loss.optimizer import get_optimizer, restore_opt, restore_net,forgiving_state_restore
 
 import datasets
 import network
@@ -62,9 +62,8 @@ except ImportError:
     print(AutoResume)
 
 
-# Argument Parser
 parser = argparse.ArgumentParser(description='Semantic Segmentation')
-parser.add_argument('--lr', type=float, default=5e-3)
+parser.add_argument('--lr', type=float, default=0.002)
 parser.add_argument('--arch', type=str, default='deepv3.DeepV3PlusR50',
                     help='Network architecture. We have DeepSRNX50V3PlusD (backbone: ResNeXt50) \
                     and deepWV3Plus (backbone: WideResNet38).')
@@ -108,9 +107,9 @@ parser.add_argument('--rescale', type=float, default=1.0,
 parser.add_argument('--repoly', type=float, default=1.5,
                     help='Warm Restart new poly exp')
 
-parser.add_argument('--apex', action='store_true', default=False,
+parser.add_argument('--apex', action='store_true', default=True,
                     help='Use Nvidia Apex Distributed Data Parallel')
-parser.add_argument('--fp16', action='store_true', default=False,
+parser.add_argument('--fp16', action='store_true', default=True,
                     help='Use Nvidia Apex AMP')
 
 parser.add_argument('--local_rank', default=0, type=int,
@@ -142,7 +141,7 @@ parser.add_argument('--brt_aug', action='store_true', default=False,
                     help='Use brightness augmentation')
 parser.add_argument('--lr_schedule', type=str, default='poly',
                     help='name of lr schedule: poly')
-parser.add_argument('--poly_exp', type=float, default=2.0,
+parser.add_argument('--poly_exp', type=float, default=1.0,
                     help='polynomial LR exponent')
 parser.add_argument('--poly_step', type=int, default=110,
                     help='polynomial epoch step')
@@ -150,7 +149,7 @@ parser.add_argument('--bs_trn', type=int, default=2,
                     help='Batch size for training per gpu')
 parser.add_argument('--bs_val', type=int, default=1,
                     help='Batch size for Validation per gpu')
-parser.add_argument('--crop_size', type=str, default="800,800",
+parser.add_argument('--crop_size', type=str, default='896',
                     help=('training crop size: either scalar or h,w'))
 parser.add_argument('--scale_min', type=float, default=0.5,
                     help='dynamically scale training images down to this size')
@@ -159,7 +158,7 @@ parser.add_argument('--scale_max', type=float, default=2.0,
 parser.add_argument('--weight_decay', type=float, default=1e-4)
 parser.add_argument('--momentum', type=float, default=0.9)
 parser.add_argument('--snapshot', type=str, default=None)
-parser.add_argument('--resume', type=str, default=None,
+parser.add_argument('--resume', type=str, default='/home/newjacob19/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50_test/deepv3.DeepV3PlusR50_sexy-potoo_2022.08.03_18.46/logs/train_cityscapes_deepv3plus_r50_test/deepv3.DeepV3PlusR50_sexy-potoo_2022.08.03_18.46/best_checkpoint_ep0.pth',
                     help=('continue training from a checkpoint. weights, '
                           'optimizer, schedule are restored'))
 parser.add_argument('--restore_optimizer', action='store_true', default=False)
@@ -168,7 +167,7 @@ parser.add_argument('--exp', type=str, default='default',
                     help='experiment directory name')
 parser.add_argument('--result_dir', type=str, default='./logs',
                     help='where to write log output')
-parser.add_argument('--syncbn', action='store_true', default=False,
+parser.add_argument('--syncbn', action='store_true', default=True,
                     help='Use Synchronized BN')
 parser.add_argument('--dump_augmentation_images', action='store_true', default=False,
                     help='Dump Augmentated Images for sanity check')
@@ -281,7 +280,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="2,3"
+os.environ["CUDA_VISIBLE_DEVICES"]="0,4"
 
 from neptune_token import run       #netpune token.
 
@@ -337,7 +336,8 @@ class Discriminator(nn.Module):
 
     def forward(self, img):
         cnns =self.cnn_part(img)
-        validity = self.fclayer_part(cnns)
+        flatten_cnns = torch.flatten(cnns,1)
+        validity = self.fclayer_part(flatten_cnns)
 
         return validity
 #----------------------------
@@ -422,15 +422,29 @@ def main():
     net = network.get_net(args, criterion)      #model retrun (deeplabv3 resnet-50)
     optim, scheduler = get_optimizer(args, net) #optim : SGD
 
+    discriminator = Discriminator().cuda()     #GAN
+
+    optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.002)       #GAN
+
+
     if args.fp16:
         net, optim = amp.initialize(net, optim, opt_level=args.amp_opt_level)
+        discriminator, optimizer_D = amp.initialize(discriminator, optimizer_D, opt_level=args.amp_opt_level)
+
 
     net = network.wrap_network_in_dataparallel(net, args.apex)
+    discriminator = network.wrap_network_in_dataparallel(discriminator,args.apex)       #GAN
 
     if args.restore_optimizer:
         restore_opt(optim, checkpoint)
+        #GAN
+        optimizer_D.load_state_dict(checkpoint['optimizer_D'])
+
     if args.restore_net:
         restore_net(net, checkpoint)
+        #GAN
+        forgiving_state_restore(discriminator, checkpoint['discriminator'])
+
 
     if args.init_decoder:
         net.module.init_mods()
@@ -466,12 +480,8 @@ def main():
 
     #--------------
     #GAN
-    adversarial_loss = torch.nn.BCELoss()   #GAN
-    discriminator = Discriminator()     #GAN
-    if torch.cuda.is_available():       #GAN
-        discriminator.cuda()
-        adversarial_loss.cuda()
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.0002, betas=(0.5, 0.999))
+    #adversarial_loss = torch.nn.BCELoss()   #GAN
+    adversarial_loss = torch.nn.BCEWithLogitsLoss()     #amp는 BCELoss 작동안함.
 
 
 
@@ -501,7 +511,7 @@ def main():
             train_loader.sampler.set_epoch(epoch + 1)
 
         if epoch % args.val_freq == 0:
-            validate(val_loader, net, criterion_val, optim, epoch)
+            validate(val_loader, net, criterion_val, optim, epoch,discriminator,optimizer_D)
 
         scheduler.step()
 
@@ -534,6 +544,9 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         if i <= warmup_iter:
             start_time = time.time()
 
+        if i == 50:
+            break
+
         #Loading images
         # inputs = (bs,3,713,713)
         # gts    = (bs,713,713)
@@ -546,18 +559,18 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         real_labels = torch.ones(train_loader.batch_size, 1).cuda()
         fake_labels = torch.zeros(train_loader.batch_size, 1).cuda()
 
+        segmentation.train()
+        discriminator.train()
+
         #------------------
         #   Stage 1
         #   Training Segmentation model with Seg loss and Adv loss (BCE loss)
         #------------------
-        
-        #segmentation unfreeze
-        segmentation.train()
-        discriminator.train()
-
         optimizer_S.zero_grad()
+
         seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
         #   'out' the network prediction, shape (batch,19,H,W)
+
         smax_out = torch.nn.functional.softmax(out, dim=1)  #(batch,19,H,W)
 
         #-----------------
@@ -567,7 +580,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         # ignore those 255 IDs.
         #-----------------       
 
-        adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
+        adv_loss = adversarial_loss(discriminator(smax_out),real_labels)
         stage1_loss = seg_loss + adv_loss
 
         #---
@@ -593,20 +606,16 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #   Stage 2
         #   Training Discriminator ONLY
         #------------------
-        #discriminatro unfreeze
-
         optimizer_D.zero_grad()   
 
         onehot_gts=torch.nn.functional.one_hot(gts,256)                 #(batch,H,W,256)
         onehot_gts=torch.permute(onehot_gts,(0,3,1,2))[:,0:19]          #(batch,256,H,W)   torch.int64  Note. permute and transpose are Not same. It can look similar but not same. 0~18 and 255 dimension contains 1.
         gts_float = onehot_gts.detach().clone().type(torch.float32)     #(batch,19,H,W)    torch.float32
 
-        seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
-        smax_out = torch.nn.functional.softmax(out, dim=1)  #(2,19,800,800)
-
         real_loss = adversarial_loss(discriminator(gts_float),real_labels)
-        fake_loss = adversarial_loss(discriminator(smax_out),fake_labels)
-        stage2_loss = (real_loss + fake_loss)/2
+        fake_loss = adversarial_loss(discriminator(smax_out.detach()),fake_labels)
+
+        stage2_loss = real_loss + fake_loss
 
         #---
         if args.apex:
@@ -668,6 +677,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
 
 
 def validate(val_loader, net, criterion, optim, epoch,
+             discriminator,optimizer_D,
              calc_metrics=True,
              dump_assets=False,
              dump_all_images=False):
@@ -724,7 +734,9 @@ def validate(val_loader, net, criterion, optim, epoch,
 
     was_best = False
     if calc_metrics:
-        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch,Neptune_run=run)
+        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch,discriminator=discriminator,optimizer_D=optimizer_D,Neptune_run=run)
+
+        
 
     # Write out a summary html page and tensorboard image table
     if not args.dump_for_auto_labelling and not args.dump_for_submission:
