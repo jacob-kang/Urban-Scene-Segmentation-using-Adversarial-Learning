@@ -163,7 +163,7 @@ parser.add_argument('--scale_max', type=float, default=2.0,
 parser.add_argument('--weight_decay', type=float, default=1e-4)
 parser.add_argument('--momentum', type=float, default=0.9)
 parser.add_argument('--snapshot', type=str, default=None)
-parser.add_argument('--resume', type=str, default=None,
+parser.add_argument('--resume', type=str, default='/home/lecun/Workspace/jisu/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_fair-hare_2022.08.25_12.54/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_fair-hare_2022.08.25_12.54/last_checkpoint_ep7.pth',
                     help=('continue training from a checkpoint. weights, '
                           'optimizer, schedule are restored'))
 parser.add_argument('--restore_optimizer', action='store_true', default=False)

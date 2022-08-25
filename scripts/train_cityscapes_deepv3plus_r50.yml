@@ -2,7 +2,7 @@
 # Only requires 16GB gpus
 
 #CMD: "python -m torch.distributed.launch --master_port 29502 --nproc_per_node=2 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_plain.py"
-CMD: "python -m torch.distributed.launch --master_port 29506 --nproc_per_node=2 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_gan_visual_eval.py"
+CMD: "python -m torch.distributed.launch --master_port 29505 --nproc_per_node=2 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_gan_visual_feature_matching.py"
 
 HPARAMS: [
   {

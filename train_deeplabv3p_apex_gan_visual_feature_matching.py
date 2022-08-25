@@ -163,7 +163,7 @@ parser.add_argument('--scale_max', type=float, default=2.0,
 parser.add_argument('--weight_decay', type=float, default=1e-4)
 parser.add_argument('--momentum', type=float, default=0.9)
 parser.add_argument('--snapshot', type=str, default=None)
-parser.add_argument('--resume', type=str, default='/home/lecun/Workspace/jisu/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_white-wasp_2022.08.25_12.49/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_white-wasp_2022.08.25_12.49/last_checkpoint_ep8.pth',
+parser.add_argument('--resume', type=str, default=None,
                     help=('continue training from a checkpoint. weights, '
                           'optimizer, schedule are restored'))
 parser.add_argument('--restore_optimizer', action='store_true', default=False)
@@ -339,17 +339,17 @@ class Discriminator(nn.Module):
             nn.Linear(150, 1)
         )
 
-    def forward(self, img):
+    def forward(self, img,feature=False):
         cnns =self.cnn_part(img)
         pooled_cnns = self.adaptiveAvgPool(cnns)
         flatten_cnns = torch.flatten(pooled_cnns,1)
         validity = self.fclayer_part(flatten_cnns)
+        
+        if feature:
+            return validity,cnns
 
         return validity
 #----------------------------
-
-
-
 
 def check_termination(epoch):
     if AutoResume:
@@ -431,7 +431,9 @@ def main():
     discriminator = Discriminator().cuda()     #GAN
 
     optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.002)       #GAN
-
+    
+    adversarial_loss = nn.BCEWithLogitsLoss()
+    Feature_matching_loss = nn.MSELoss()
 
     if args.fp16:
         net, optim = amp.initialize(net, optim, opt_level=args.amp_opt_level)
@@ -483,8 +485,7 @@ def main():
         return 0
     elif args.eval is not None:
         raise 'unknown eval option {}'.format(args.eval)
-
-    adversarial_loss = torch.nn.BCEWithLogitsLoss()
+        
 
     for epoch in range(args.start_epoch, args.max_epoch):
         update_epoch(epoch)
@@ -506,7 +507,7 @@ def main():
         else:
             pass
 
-        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss)
+        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss,Feature_matching_loss)
 
         if args.apex:
             train_loader.sampler.set_epoch(epoch + 1)
@@ -523,7 +524,7 @@ def main():
     run.stop()      #stop neptune
 
 
-def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss):
+def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss,Feature_matching_loss):
     """
     Runs the training loop per epoch
     train_loader: Data loader for train
@@ -572,8 +573,8 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #------------------
         optimizer_D.zero_grad()   
         
-        real_validity= discriminator(gts_float)
-        fake_validity= discriminator(smax_out.detach())
+        real_validity,real_feature = discriminator(gts_float,True)
+        fake_validity,fake_feature = discriminator(smax_out.detach(),True)
         
         real_loss = adversarial_loss(real_validity,real_labels)
         fake_loss = adversarial_loss(fake_validity,fake_labels)
@@ -606,7 +607,11 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         optimizer_S.zero_grad()
 
         adv_loss = adversarial_loss(discriminator(smax_out),real_labels)
-        stage2_loss = seg_loss + adv_loss
+        
+        Feature_loss = Feature_matching_loss(fake_feature.detach(),real_feature.detach())
+        
+        
+        stage2_loss = seg_loss + adv_loss + Feature_loss
 
         #---
         if args.apex:
