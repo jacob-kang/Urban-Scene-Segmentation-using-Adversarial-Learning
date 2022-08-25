@@ -1,5 +1,10 @@
 # Urban-Scene Segmentation using Adversarial Learning.
 
+
+## THis repository is still under construction. __Not completed yet__
+
+
+
 This repository is about Urban-Scene Segmentation using Adversarial Learning (Semantic segmentation + GAN).   
 As you may know, GAN can offer ground truth's distribution knowledge to model by Adversarial loss.   
 So I tried adding GAN to Semantic segmentation (City scapes).   
