@@ -60,7 +60,7 @@ except ImportError:
 
 # Argument Parser
 parser = argparse.ArgumentParser(description='Semantic Segmentation')
-parser.add_argument('--lr', type=float, default=0.002)
+parser.add_argument('--lr', type=float, default=0.01)
 parser.add_argument('--arch', type=str, default='deepv3.DeepV3PlusR50',
                     help='Network architecture. We have DeepSRNX50V3PlusD (backbone: ResNeXt50) \
                     and deepWV3Plus (backbone: WideResNet38).')
@@ -155,7 +155,7 @@ parser.add_argument('--scale_max', type=float, default=2.0,
 parser.add_argument('--weight_decay', type=float, default=1e-4)
 parser.add_argument('--momentum', type=float, default=0.9)
 parser.add_argument('--snapshot', type=str, default=None)
-parser.add_argument('--resume', type=str, default='/home/newjacob19/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50/Plain_deepv3.DeepV3PlusR50_big-carp_2022.08.02_20.03/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_big-carp_2022.08.02_20.03/best_checkpoint_ep97.pth',
+parser.add_argument('--resume', type=str, default=None,
                     help=('continue training from a checkpoint. weights, '
                           'optimizer, schedule are restored'))
 parser.add_argument('--restore_optimizer', action='store_true', default=False)
@@ -277,7 +277,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 from neptune_token import run       #netpune token.
 
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="1,4"
+os.environ["CUDA_VISIBLE_DEVICES"]="1,6"
 
 # Enable CUDNN Benchmarking optimization
 torch.backends.cudnn.benchmark = True
@@ -584,10 +584,10 @@ def validate(val_loader, net, criterion, optim, epoch,
 
         input_images, labels, img_names, _ = data
 
-        # dumper.dump({'gt_images': labels,
-        #              'input_images': input_images,
-        #              'img_names': img_names,
-        #              'assets': assets}, val_idx)
+        dumper.dump({'gt_images': labels,
+                     'input_images': input_images,
+                     'img_names': img_names,
+                     'assets': assets}, val_idx)
 
         if val_idx > 5 and args.test_mode:
             break

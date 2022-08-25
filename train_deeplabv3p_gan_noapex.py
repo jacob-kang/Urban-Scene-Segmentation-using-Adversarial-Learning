@@ -36,6 +36,7 @@ import sys
 import time
 import torch
 
+#from torch.cuda import amp
 from apex import amp
 from runx.logx import logx
 from config import assert_and_infer_cfg, update_epoch, cfg
@@ -43,7 +44,7 @@ from utils.misc import AverageMeter, prep_experiment, eval_metrics, neptune_logg
 from utils.misc import ImageDumper
 from utils.trnval_utils import eval_minibatch, validate_topn
 from loss.utils import get_loss
-from loss.optimizer import get_optimizer, restore_opt, restore_net
+from loss.optimizer import get_optimizer, restore_opt, restore_net,forgiving_state_restore
 
 import datasets
 import network
@@ -62,9 +63,8 @@ except ImportError:
     print(AutoResume)
 
 
-# Argument Parser
 parser = argparse.ArgumentParser(description='Semantic Segmentation')
-parser.add_argument('--lr', type=float, default=5e-3)
+parser.add_argument('--lr', type=float, default=0.1)
 parser.add_argument('--arch', type=str, default='deepv3.DeepV3PlusR50',
                     help='Network architecture. We have DeepSRNX50V3PlusD (backbone: ResNeXt50) \
                     and deepWV3Plus (backbone: WideResNet38).')
@@ -150,7 +150,7 @@ parser.add_argument('--bs_trn', type=int, default=2,
                     help='Batch size for training per gpu')
 parser.add_argument('--bs_val', type=int, default=1,
                     help='Batch size for Validation per gpu')
-parser.add_argument('--crop_size', type=str, default="400,400",
+parser.add_argument('--crop_size', type=str, default="768",
                     help=('training crop size: either scalar or h,w'))
 parser.add_argument('--scale_min', type=float, default=0.5,
                     help='dynamically scale training images down to this size')
@@ -281,7 +281,7 @@ args.best_record = {'epoch': -1, 'iter': 0, 'val_loss': 1e10, 'acc': 0,
 
 #jacob import
 os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"   
-os.environ["CUDA_VISIBLE_DEVICES"]="4"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 
 from neptune_token import run       #netpune token.
 
@@ -290,6 +290,7 @@ torch.backends.cudnn.benchmark = True
 if args.deterministic:
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+
 
 args.world_size = 1
 
@@ -316,46 +317,31 @@ class Discriminator(nn.Module):
         super(Discriminator, self).__init__()
 
         self.cnn_part = nn.Sequential(
-            nn.Conv2d(in_channels=19,out_channels=30,kernel_size=7,stride=3),   #(h-4)/3
+            nn.Conv2d(in_channels=19,out_channels=30,kernel_size=7,stride=2),
             nn.BatchNorm2d(30),
             nn.ReLU(),
-            nn.Conv2d(in_channels=30,out_channels=60,kernel_size=3,stride=2),   #(h-7)/6
+            nn.Conv2d(in_channels=30,out_channels=60,kernel_size=3,stride=2),
             nn.BatchNorm2d(60),
             nn.ReLU(),
-            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2),  #(h-10)/12
-            nn.BatchNorm2d(120),
-            nn.ReLU(),
-            nn.Conv2d(in_channels=120,out_channels=240,kernel_size=3,stride=2),  #(h-10)/12
+            nn.Conv2d(in_channels=60,out_channels=120,kernel_size=3,stride=2),
+            nn.AdaptiveAvgPool2d((1,1))
         )
 
         self.fclayer_part = nn.Sequential(
-            nn.Linear(240, 120),
+            nn.Linear(120, 300),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(120, 40),
+            nn.Linear(300, 150),
             nn.LeakyReLU(0.2, inplace=True),
-            nn.Linear(40, 1),
+            nn.Linear(150, 1),
+            #nn.Sigmoid(),
         )
 
-        self.glb_avgpool = nn.AdaptiveAvgPool2d((1,1))
+    def forward(self, img):
+        cnns =self.cnn_part(img)
+        flatten_cnns = torch.flatten(cnns,1)
+        validity = self.fclayer_part(flatten_cnns)
 
-        self.sigmoid_part = nn.Sigmoid()
-
-        
-
-    def forward(self, img,mathcing = False):
-        cnns =self.cnn_part(img)        #(batch,120,?,?)        #400기준 2,120,32,32
-        pooled_cnns = self.glb_avgpool(cnns)    #400기준 2,120,1,1
-
-        validity = torch.flatten(pooled_cnns,1)
-        validity = self.fclayer_part(validity)
-        validity = self.sigmoid_part(validity)
-
-
-        #return validity
-        if mathcing == True:
-            return cnns,validity
-        else:
-            return validity
+        return validity
 #----------------------------
 
 
@@ -438,15 +424,17 @@ def main():
     net = network.get_net(args, criterion)      #model retrun (deeplabv3 resnet-50)
     optim, scheduler = get_optimizer(args, net) #optim : SGD
 
-    if args.fp16:
-        net, optim = amp.initialize(net, optim, opt_level=args.amp_opt_level)
-
-    net = network.wrap_network_in_dataparallel(net, args.apex)
+    discriminator = Discriminator().cuda()     #GAN
+    optimizer_D = torch.optim.SGD(discriminator.parameters(), lr=0.00001)       #GAN
 
     if args.restore_optimizer:
         restore_opt(optim, checkpoint)
+        optimizer_D.load_state_dict(checkpoint['optimizer_D'])
+
     if args.restore_net:
         restore_net(net, checkpoint)
+        forgiving_state_restore(discriminator, checkpoint['discriminator'])
+
 
     if args.init_decoder:
         net.module.init_mods()
@@ -482,18 +470,13 @@ def main():
 
     #--------------
     #GAN
-    adversarial_loss = torch.nn.BCELoss()   #GAN
-    discriminator_loss = torch.nn.MSELoss()    #GAN
-    discriminator = Discriminator()     #GAN
-    if torch.cuda.is_available():       #GAN
-        adversarial_loss.cuda()
-        discriminator_loss.cuda()
-        discriminator.cuda()
-    optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=0.00002, betas=(0.5, 0.999))
+    #adversarial_loss = torch.nn.BCELoss()   #GAN
+    adversarial_loss = torch.nn.BCEWithLogitsLoss()     #amp는 BCELoss 작동안함.
 
 
 
     for epoch in range(args.start_epoch, args.max_epoch):
+        run["val/Learning rate"].log(optimizer_D.param_groups[0]['lr'])
         update_epoch(epoch)
 
         if args.only_coarse:
@@ -513,15 +496,18 @@ def main():
         else:
             pass
 
-        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss,discriminator_loss)
+        train(train_loader, net, optim, epoch,discriminator,optimizer_D,adversarial_loss)
 
         if args.apex:
             train_loader.sampler.set_epoch(epoch + 1)
 
         if epoch % args.val_freq == 0:
-            validate(val_loader, net, criterion_val, optim, epoch)
+            validate(val_loader, net, criterion_val, optim, epoch,discriminator,optimizer_D)
 
+        visualize(val_loader, net, criterion_val, optim, epoch,discriminator,optimizer_D)       
+        
         scheduler.step()
+          
 
         if check_termination(epoch):
             return 0
@@ -529,7 +515,7 @@ def main():
     run.stop()      #stop neptune
 
 
-def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss,discriminator_loss):
+def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,optimizer_D,adversarial_loss):
     """
     Runs the training loop per epoch
     train_loader: Data loader for train
@@ -541,7 +527,6 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     #Jacob
     discriminator: Discriminator for GAN
     optimizer_D: Optimizer of discriminator
-    discriminator_loss : MSEloss for feature matching (improved gan)
     """
 
     train_stage1_loss = AverageMeter()
@@ -549,16 +534,13 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
     start_time = None
     warmup_iter = 10
 
-
-    test_smax = torch.rand((2,19,400,400)).cuda()
-
     for i, data in enumerate(train_loader):
         if i <= warmup_iter:
             start_time = time.time()
 
         #Loading images
-        # inputs = (bs,3,args.crop_size,args.crop_size)
-        # gts    = (bs,args.crop_size,args.crop_size)
+        # inputs = (bs,3,713,713)
+        # gts    = (bs,713,713)
         images, gts, _img_name, scale_float = data
         batch_pixel_size = images.size(0) * images.size(2) * images.size(3)
         images, gts, scale_float = images.cuda(), gts.cuda(), scale_float.cuda()
@@ -568,38 +550,29 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         real_labels = torch.ones(train_loader.batch_size, 1).cuda()
         fake_labels = torch.zeros(train_loader.batch_size, 1).cuda()
 
+        segmentation.train()
+        discriminator.train()
+
         #------------------
         #   Stage 1
         #   Training Segmentation model with Seg loss and Adv loss (BCE loss)
         #------------------
-        
-        #segmentation unfreeze
-        segmentation.train()
-        discriminator.train()
-
         optimizer_S.zero_grad()
+
         seg_loss,out = segmentation(inputs)     #seg_loss는 CrossEntropyLoss이고, out은 Segmentation 마스크임.
         #   'out' the network prediction, shape (batch,19,H,W)
+
         smax_out = torch.nn.functional.softmax(out, dim=1)  #(batch,19,H,W)
-
-        if i%20 == 19:
-            print(i)
-            loss=discriminator_loss(test_smax,smax_out)
-            print(loss)
-            run["train/seg equal loss"].log(loss)
-
-            test_smax=smax_out
-
 
         #-----------------
         # https://github.com/mcordts/cityscapesScripts/blob/master/cityscapesscripts/helpers/labels.py
         # The Cityscapes dataset has origianlly 34 classes. But when you use this for training, You should convert 34 classes to 19 classes.
         # And When you train your model, There must be TrainID 255. That is, 'unlabeled, poleground,caravan, trailer, out or roi, etc..'.
         # ignore those 255 IDs.
-        #-----------------
+        #-----------------       
 
-        adv_loss = adversarial_loss(discriminator(smax_out),fake_labels)       #GT가 아닌 만들어낸건 다 Fake로
-        stage1_loss = seg_loss - adv_loss
+        adv_loss = adversarial_loss(discriminator(smax_out),real_labels)
+        stage1_loss = seg_loss + adv_loss
 
         #---
         if args.apex:
@@ -611,7 +584,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
             stage1_loss = stage1_loss.mean()
             log_stage1_loss = stage1_loss.clone().detach_()
 
-        train_stage1_loss.update(log_stage1_loss.item(), batch_pixel_size)
+        train_stage1_loss.update(log_stage1_loss.item(), batch_pixel_size)        #??? 이게 뭐지?
         if args.fp16:
             with amp.scale_loss(stage1_loss, optimizer_S) as scaled_loss:
                 scaled_loss.backward()
@@ -624,27 +597,16 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         #   Stage 2
         #   Training Discriminator ONLY
         #------------------
-        #discriminator unfreeze
-
         optimizer_D.zero_grad()   
 
         onehot_gts=torch.nn.functional.one_hot(gts,256)                 #(batch,H,W,256)
         onehot_gts=torch.permute(onehot_gts,(0,3,1,2))[:,0:19]          #(batch,256,H,W)   torch.int64  Note. permute and transpose are Not same. It can look similar but not same. 0~18 and 255 dimension contains 1.
         gts_float = onehot_gts.detach().clone().type(torch.float32)     #(batch,19,H,W)    torch.float32
 
-        # gts_feature,_ = discriminator(gts_float,mathcing= True)
-        # fake_feature,_ = discriminator(smax_out.detach(),mathcing= True)
-        # stage2_loss = discriminator_loss(fake_feature,gts_feature)
-
-        #gts_val = discriminator(gts_float)
-        #fake_val = discriminator(smax_out)
-
-        #stage2_loss = discriminator_loss(fake_val,gts_val)
-
-        real_loss = adversarial_loss(discriminator(gts_float),real_labels)
+        real_loss = adversarial_loss(discriminator(gts_float),real_labels)          #문제 없지않을까?
         fake_loss = adversarial_loss(discriminator(smax_out.detach()),fake_labels)
 
-        stage2_loss = (real_loss + fake_loss)/2
+        stage2_loss = real_loss + fake_loss
 
         #---
         if args.apex:
@@ -655,7 +617,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         else:
             stage2_loss = stage2_loss.mean()
             log_stage2_loss = stage2_loss.clone().detach_()
- 
+
         train_stage2_loss.update(log_stage2_loss.item(), batch_pixel_size)
         if args.fp16:
             with amp.scale_loss(stage2_loss, optimizer_D) as scaled_loss:
@@ -696,6 +658,7 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         run["train/Real loss"].log(real_loss)
         run["train/Fake loss"].log(fake_loss)
 
+        run["train/Learning rate"].log(optimizer_D.param_groups[0]['lr'])
 
         if i >= 10 and args.test_mode:
             del data, inputs, gts
@@ -703,12 +666,10 @@ def train(train_loader, segmentation, optimizer_S, curr_epoch,discriminator,opti
         del data
         torch.cuda.empty_cache()
 
-        if i == 80:
-            break
-
 
 
 def validate(val_loader, net, criterion, optim, epoch,
+             discriminator,optimizer_D,
              calc_metrics=True,
              dump_assets=False,
              dump_all_images=False):
@@ -765,11 +726,63 @@ def validate(val_loader, net, criterion, optim, epoch,
 
     was_best = False
     if calc_metrics:
-        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch,Neptune_run=run)
+        was_best = eval_metrics(iou_acc, args, net, optim, val_loss, epoch,discriminator=discriminator,optimizer_D=optimizer_D,Neptune_run=run)
 
     # Write out a summary html page and tensorboard image table
     if not args.dump_for_auto_labelling and not args.dump_for_submission:
         dumper.write_summaries(was_best)
+        
+def visualize(val_loader, net, criterion, optim, epoch,
+             discriminator,optimizer_D,
+             calc_metrics=True,
+             dump_assets=False,
+             dump_all_images=False):
+    """
+    Run validation for one epoch
 
+    :val_loader: data loader for validation
+    :net: the network
+    :criterion: loss fn
+    :optimizer: optimizer
+    :epoch: current epoch
+    :calc_metrics: calculate validation score
+    :dump_assets: dump attention prediction(s) images
+    :dump_all_images: dump all images, not just N
+    """
+    dumper = ImageDumper(val_len=len(val_loader),
+                         dump_all_images=dump_all_images,
+                         dump_assets=dump_assets,
+                         dump_for_auto_labelling=args.dump_for_auto_labelling,
+                         dump_for_submission=args.dump_for_submission)
+
+    net.eval()
+    val_loss = AverageMeter()
+    iou_acc = 0
+
+    for val_idx, data in enumerate(val_loader):
+        input_images, labels, img_names, _ = data 
+        if args.dump_for_auto_labelling or args.dump_for_submission:
+            submit_fn = '{}_{}.png'.format(img_names[0],epoch)
+            if val_idx % 20 == 0:
+                logx.msg(f'validating[Iter: {val_idx + 1} / {len(val_loader)}]')
+            if os.path.exists(os.path.join(dumper.save_dir, submit_fn)):
+                continue
+
+        # Run network
+        assets, _iou_acc = \
+            eval_minibatch(data, net, criterion, val_loss, calc_metrics,
+                          args, val_idx)
+
+        iou_acc += _iou_acc
+
+        input_images, labels, img_names, _ = data
+
+        dumper.dump({'gt_images': labels,
+                     'input_images': input_images,
+                     'img_names': img_names,
+                     'assets': assets}, val_idx,epoch)
+        
+        break
+    
 if __name__ == '__main__':
     main()

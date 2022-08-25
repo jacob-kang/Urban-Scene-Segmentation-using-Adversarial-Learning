@@ -46,6 +46,8 @@ from config import cfg
 from utils.results_page import ResultsPage
 from runx.logx import logx
 
+epoch = 0
+
 #jacob
 def neptune_logger(Neptune_run,val_loss, acc,acc_cls,mean_iu,fwavacc):
 
@@ -54,6 +56,7 @@ def neptune_logger(Neptune_run,val_loss, acc,acc_cls,mean_iu,fwavacc):
     Neptune_run["Val/Acc_cls"].log(acc_cls)
     Neptune_run["Val/Mean_iu"].log(mean_iu)
     Neptune_run["Val/fwavacc"].log(fwavacc)
+    
 
 def fast_hist(pred, gtruth, num_classes):
     # mask indicates pixels we care about
@@ -302,7 +305,7 @@ class ImageDumper():
         self.imgs_to_tensorboard = []
         self.imgs_to_webpage = []
 
-    def dump(self, dump_dict, val_idx):
+    def dump(self, dump_dict, val_idx,epoch=None):
         """
         dump a single batch of images
 
@@ -356,17 +359,17 @@ class ImageDumper():
         input_image_fn = f'{img_name}_input.png'
         input_image.save(os.path.join(self.save_dir, input_image_fn))
 
-        gt_fn = '{}_gt.png'.format(img_name)
+        gt_fn = '{}_{}_gt.png'.format(epoch,img_name)
         gt_pil = colorize_mask_fn(gt_image.cpu().numpy())
         gt_pil.save(os.path.join(self.save_dir, gt_fn))
 
-        prediction_fn = '{}_prediction.png'.format(img_name)
+        prediction_fn = '{}_{}_prediction.png'.format(epoch,img_name)
         prediction_pil = colorize_mask_fn(prediction)
         prediction_pil.save(os.path.join(self.save_dir, prediction_fn))
 
         prediction_pil = prediction_pil.convert('RGB')
         composited = Image.blend(input_image, prediction_pil, 0.4)
-        composited_fn = 'composited_{}.png'.format(img_name)
+        composited_fn = '{}_composited_{}.png'.format(epoch,img_name)
         composited_fn = os.path.join(self.save_dir, composited_fn)
         composited.save(composited_fn)
 

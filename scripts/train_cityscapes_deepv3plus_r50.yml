@@ -1,8 +1,8 @@
 # Train cityscapes with deeplab v3+ and resnet-50
 # Only requires 16GB gpus
 
-#CMD: "python -m torch.distributed.launch --nproc_per_node=2 /home/newjacob19/semantic-segmentation/train_deeplabv3p_apex_gan.py"
-CMD: "python -m torch.distributed.launch --master_port 29501 --nproc_per_node=2 /home/newjacob19/semantic-segmentation/train_deeplabv3p_apex_plain.py"
+#CMD: "python -m torch.distributed.launch --master_port 29502 --nproc_per_node=2 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_plain.py"
+CMD: "python -m torch.distributed.launch --master_port 29506 --nproc_per_node=2 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_gan_visual_eval.py"
 
 HPARAMS: [
   {
@@ -11,11 +11,11 @@ HPARAMS: [
   syncbn: true,
   apex: true,
   fp16: false,
-  crop_size: "800,800",
+  crop_size: "768,768",
   bs_trn: 2,
   poly_exp: 2,
-  lr: 5e-3,
-  max_epoch: 175,
+  #lr: 5e-3,
+  max_epoch: 180,
   arch: deepv3.DeepV3PlusR50,
   result_dir: LOGDIR,
   RUNX.TAG: '{arch}',

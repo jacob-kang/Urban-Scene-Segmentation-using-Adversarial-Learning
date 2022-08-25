@@ -1,6 +1,6 @@
 # Run Evaluation and Dump Images on Cityscapes with a pretrained model
 
-CMD: "python -m torch.distributed.launch --nproc_per_node=1 train.py"
+CMD: "python -m torch.distributed.launch --nproc_per_node=1 /home/lecun/Workspace/jisu/semantic-segmentation/train_deeplabv3p_apex_plain.py"
 
 HPARAMS: [
   {
@@ -14,8 +14,8 @@ HPARAMS: [
    dump_assets: true,
    dump_all_images: true,
    n_scales: "0.5,1.0,2.0",
-   snapshot: "ASSETS_PATH/seg_weights/cityscapes_ocrnet.HRNet_Mscale_outstanding-turtle.pth",
-   arch: ocrnet.HRNet_Mscale,
+   snapshot: "/home/lecun/Workspace/jisu/semantic-segmentation/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_dainty-cow_2022.08.11_10.46/logs/train_cityscapes_deepv3plus_r50/deepv3.DeepV3PlusR50_dainty-cow_2022.08.11_10.46/best_checkpoint_ep158.pth",
+   arch: deepv3.DeepV3PlusR50,
    result_dir: LOGDIR,
   },
 ]

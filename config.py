@@ -49,7 +49,7 @@ cfg = __C
 __C.GLOBAL_RANK = 0
 __C.EPOCH = 0
 # Absolute path to a location to keep some large files, not in this dir.
-__C.ASSETS_PATH = '/SSD1/jisu/deeplabv3'
+__C.ASSETS_PATH = '/home/lecun/Workspace/jisu/data'
 
 # Use class weighted loss per batch to increase loss for low pixel count classes per batch
 __C.BATCH_WEIGHTING = False
@@ -75,7 +75,7 @@ __C.TRAIN.FP16 = False
 #Attribute Dictionary for Dataset
 __C.DATASET = AttrDict()
 #Cityscapes Dir Location
-__C.DATASET.CITYSCAPES_DIR = '/SSD1/jisu/deeplabv3/data/Cityscapes' #\
+__C.DATASET.CITYSCAPES_DIR = '/home/lecun/Workspace/jisu/data' #\
   #os.path.join(__C.ASSETS_PATH, 'data/Cityscapes')
 __C.DATASET.CITYSCAPES_CUSTOMCOARSE = \
   os.path.join(__C.ASSETS_PATH, 'data/Cityscapes/autolabelled')
